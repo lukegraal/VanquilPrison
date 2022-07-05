@@ -1,0 +1,59 @@
+package com.vanquil.prison.tools.tool.enchantment.impl.sword;
+
+import com.vanquil.prison.tools.tool.ToolType;
+import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.ctx.EnchantmentUseContext;
+
+public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableEnchantment,
+        ConfigurableEnchantment<BackstabEnchantment.Config> {
+    public static class Config {
+        final int maxLevel = 5;
+        final int damagePerHit = 6; // 3 hearts
+        final float baseChance = 0.05f;
+        final float chanceMultiplier = 1.01f;
+    }
+
+    private Config config = new Config();
+
+    @Override
+    public boolean proc(EnchantmentUseContext context) {
+        return false;
+    }
+
+    @Override
+    public Config config() {
+        return config;
+    }
+
+    @Override
+    public void updateConfig(Config config) {
+        this.config = config;
+    }
+
+    @Override
+    public ToolType type() {
+        return null;
+    }
+
+    @Override
+    public String uniqueName() {
+        return null;
+    }
+
+    @Override
+    public void apply(EnchantmentUseContext context) {
+
+    }
+
+    @Override
+    public long priceToUpgrade(int level) {
+        return 0;
+    }
+
+    @Override
+    public int maxLevel() {
+        return 0;
+    }
+}
