@@ -6,6 +6,10 @@ import com.vanquil.prison.tools.VanquilTools;
 import com.vanquil.prison.tools.config.Config;
 import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.Scheduling;
+import com.vanquil.prison.tools.util.dimension.BlockPos;
+import com.vanquil.prison.tools.util.listeners.Listeners;
+import org.bukkit.Location;
+import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +34,12 @@ public class MineManager {
         this.config = new Config<>(
                 VanquilTools.basePath.resolve(MinesConfig.CONFIG_NAME),
                 MinesConfig.class, MinesConfig::new);
+        for (Mine.Config mine : config.instance().mines) {
+            Mine mine1 = new Mine(mine);
+            mineMap.put(mine.name(), mine1);
+            toReset.add(mine1);
+        }
+
         Scheduling.repeat(() -> {
             for (Mine mine : toReset) {
                 MinesConfig conf = config.instance();
@@ -38,6 +48,34 @@ public class MineManager {
                 mine.reset();
             }
         }, 5L, 5L);
+
+        Scheduling.repeat(() -> {
+            updateHolograms();
+            queryResetting();
+        }, 1L, 1L);
+
+        protectionListeners();
+    }
+
+    private void protectionListeners() {
+        Listeners.registerListener(0, BlockBreakEvent.class, event -> {
+            if (getMineAtLocation(event.getPlayer().getLocation()) == null) {
+                event.setCancelled(true);
+            }
+        });
+    }
+
+    private Mine getMineAtLocation(Location location) {
+        BlockPos pos = BlockPos.of(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        for (Mine mine : mineMap.values()) {
+            if (mine.config().cuboid().containsLocation(pos))
+                return mine;
+        }
+        return null;
+    }
+
+    public void updateHolograms() {
+        // TODO
     }
 
     public void queryResetting() {
@@ -48,5 +86,4 @@ public class MineManager {
             }
         }
     }
-
 }

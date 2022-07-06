@@ -4,6 +4,7 @@ import com.vanquil.prison.tools.util.MinMax;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
 import com.vanquil.prison.tools.util.dimension.EntityPos;
+import com.vanquil.prison.tools.util.listeners.Listeners;
 import com.vanquil.prison.tools.util.material.Material2;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
@@ -13,8 +14,11 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Mine {
     public static class Config {
@@ -78,18 +82,20 @@ public class Mine {
         return (volumePercentage() <= config.resetVolumeThreshold);
     }
 
+    // for JH
+    public Set<BlockPos> getLayerPositions(int y) {
+        return config.cuboid
+                .volumePos().stream()
+                .filter(b -> b.y() == y)
+                .collect(Collectors.toSet());
+    }
+
     public void reset() {
         // Teleport out players
         for (Player player : world.getPlayers()) {
             Location loc = player.getLocation();
-            BlockPos a = config.cuboid.a(), b = config.cuboid.b();
-            MinMax  mx = MinMax.of(a.x(), b.x()),
-                    my = MinMax.of(a.y(), b.y()),
-                    mz = MinMax.of(a.z(), b.z());
-            if (loc.getX() < mx.max() && loc.getX() > mx.min()
-                    && loc.getY() < my.max() && loc.getY() > my.min()
-                    && loc.getZ() < mz.max() && loc.getZ() > mz.min()) {
-                EntityPos pos = config.spawnPosition;
+            EntityPos pos = new EntityPos(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+            if (config.cuboid.containsLocation(pos)) {
                 CraftPlayer player1 = (CraftPlayer) player;
                 player1.getHandle().mount(null);
                 player1.getHandle().setLocation(pos.x(), pos.y(), pos.z(), pos.yaw(), pos.pitch());

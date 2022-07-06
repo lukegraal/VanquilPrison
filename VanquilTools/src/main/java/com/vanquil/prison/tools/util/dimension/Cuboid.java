@@ -11,6 +11,7 @@ import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 
 import java.util.Set;
@@ -31,6 +32,23 @@ public class Cuboid {
 
     public BlockPos b() {
         return b;
+    }
+
+    public boolean containsLocation(EntityPos pos) {
+        return containsLocation0(pos.x(), pos.y(), pos.z());
+    }
+
+    public boolean containsLocation(BlockPos pos) {
+        return containsLocation0(pos.x(), pos.y(), pos.z());
+    }
+
+    private boolean containsLocation0(double x, double y, double z) {
+        MinMax mx = MinMax.of(a.x(), b.x()),
+                my = MinMax.of(a.y(), b.y()),
+                mz = MinMax.of(a.z(), b.z());
+        return x < mx.max() && x > mx.min()
+                && y < my.max() && y > my.min()
+                && z < mz.max() && z > mz.min();
     }
 
     public long volume() {
