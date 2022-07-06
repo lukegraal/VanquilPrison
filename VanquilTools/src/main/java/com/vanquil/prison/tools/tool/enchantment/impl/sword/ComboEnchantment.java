@@ -2,10 +2,10 @@ package com.vanquil.prison.tools.tool.enchantment.impl.sword;
 
 import com.google.common.collect.Maps;
 import com.vanquil.prison.tools.tool.ToolType;
-import com.vanquil.prison.tools.tool.enchantment.ctx.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ToolEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.storable.ToolMetadata;
+import com.vanquil.prison.tools.tool.ToolMetadata;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -22,7 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.vanquil.prison.tools.VanquilTools.UGLY_GSON;
+import static com.vanquil.prison.tools.VanquilTools.GSON;
 
 public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment {
     private static final Map<UUID, Byte> COMBO_MAP = Maps.newHashMap();
@@ -57,7 +57,7 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
                     damaged = (Player) event.getEntity();
             ItemStack itemInHand = damager.getItemInHand();
             if (itemInHand != null && itemInHand.getType() != Material.AIR) {
-                if (isOfType(type(), itemInHand.getType())) {
+                if (ToolType.isOfType(itemInHand, type().materials())) {
                     if (hasEnchantment(itemInHand, this)) {
                         UUID damagerUuid = damager.getUniqueId();
                         Byte b = COMBO_MAP.get(damagerUuid);
@@ -79,7 +79,7 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
     public void onMissPlayer(PlayerInteractEvent event) {
         if (event.getAction() == Action.LEFT_CLICK_AIR
                 || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (isOfType(type(), event.getMaterial())) {
+            if (ToolType.isOfType(event.getItem(), type().materials())) {
                 if (hasEnchantment(event.getItem(), this)) {
                     COMBO_MAP.remove(event.getPlayer().getUniqueId());
                 }
@@ -92,7 +92,7 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
         if (stack.hasTag()) {
             NBTTagCompound tag = stack.getTag();
             String json = tag.getString("metadata");
-            ToolMetadata metadata = UGLY_GSON.fromJson(json, ToolMetadata.class);
+            ToolMetadata metadata = GSON.fromJson(json, ToolMetadata.class);
             return metadata.hasEnchantment(enchantment);
         }
         return false;
@@ -100,13 +100,5 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
 
     private static void provideStrength(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10, 2, true, false));
-    }
-
-    private static boolean isOfType(ToolType type, Material material) {
-        for (Material m : type.materials()) {
-            if (m == material)
-                return true;
-        }
-        return false;
     }
 }

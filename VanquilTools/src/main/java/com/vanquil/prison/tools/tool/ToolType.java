@@ -1,6 +1,7 @@
 package com.vanquil.prison.tools.tool;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public enum ToolType {
     SWORD(
@@ -40,5 +41,13 @@ public enum ToolType {
 
     public Material[] materials() {
         return material;
+    }
+
+    public static boolean isOfType(ItemStack item, Material[] types) {
+        for (Material t : types) {
+            if (t == item.getType())
+                return true;
+        }
+        return false;
     }
 }

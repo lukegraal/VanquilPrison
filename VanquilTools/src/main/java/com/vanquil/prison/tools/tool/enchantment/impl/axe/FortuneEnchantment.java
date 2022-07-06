@@ -1,7 +1,7 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.axe;
 
 import com.vanquil.prison.tools.tool.ToolType;
-import com.vanquil.prison.tools.tool.enchantment.ctx.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.ToolEnchantment;
 import org.bukkit.entity.Player;
 

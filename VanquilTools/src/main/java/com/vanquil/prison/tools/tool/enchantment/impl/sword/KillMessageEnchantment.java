@@ -1,11 +1,12 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.sword;
 
 import com.vanquil.prison.tools.tool.ToolType;
+import com.vanquil.prison.tools.tool.Tools;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ToolEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.ctx.EnchantmentUseContext;
-import com.vanquil.prison.tools.tool.enchantment.ctx.WeaponUseContext;
-import com.vanquil.prison.tools.tool.enchantment.storable.ToolMetadata;
+import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.WeaponUseContext;
+import com.vanquil.prison.tools.tool.ToolMetadata;
 import com.vanquil.prison.tools.util.C;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
@@ -78,9 +79,9 @@ public final class KillMessageEnchantment implements ToolEnchantment,
         Player killer = event.getEntity().getKiller();
         ItemStack itemInHand = killer.getItemInHand();
         if (itemInHand != null && itemInHand.getType() != Material.AIR) {
-            ToolMetadata toolMetadata = ToolMetadata.get(itemInHand);
-            if (toolMetadata.hasEnchantment(this)) {
-                apply(new WeaponUseContext(itemInHand, killer, event.getEntity()));
+            ToolMetadata toolMetadata = Tools.metadata(itemInHand);
+            if (toolMetadata != null && toolMetadata.hasEnchantment(this)) {
+                apply(new WeaponUseContext(itemInHand, killer, event.getEntity(), toolMetadata));
             }
         }
     }

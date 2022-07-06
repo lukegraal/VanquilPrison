@@ -4,7 +4,7 @@ import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.ctx.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 
 public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableEnchantment,
         ConfigurableEnchantment<BackstabEnchantment.Config> {

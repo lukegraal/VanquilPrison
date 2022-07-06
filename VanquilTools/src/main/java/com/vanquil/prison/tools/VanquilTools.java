@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class VanquilTools extends JavaPlugin {
     public static final Gson
             PRETTY_GSON = new GsonBuilder().setPrettyPrinting().create(),
-            UGLY_GSON = new GsonBuilder().create();
+            GSON = new GsonBuilder().create();
 
     @Override
     public void onEnable() {
