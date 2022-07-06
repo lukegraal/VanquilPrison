@@ -8,6 +8,7 @@
     <modules>
         <module>VanquilTools</module>
         <module>VanquilSets</module>
+        <module>VanquilExtras</module>
     </modules>
 
     <packaging>pom</packaging>
