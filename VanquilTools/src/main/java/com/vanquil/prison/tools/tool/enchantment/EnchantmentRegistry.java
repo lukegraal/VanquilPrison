@@ -1,8 +1,8 @@
 package com.vanquil.prison.tools.tool.enchantment;
 
 import com.google.common.collect.Sets;
-import com.vanquil.prison.tools.tool.enchantment.impl.axe.JumpBoostEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.impl.axe.SpeedEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.JumpBoostEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.SpeedEnchantment;
 
 import java.util.Set;
 

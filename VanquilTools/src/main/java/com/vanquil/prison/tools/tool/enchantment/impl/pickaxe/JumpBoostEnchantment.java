@@ -1,4 +1,4 @@
-package com.vanquil.prison.tools.tool.enchantment.impl.axe;
+package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
 
 import com.vanquil.prison.tools.tool.ToolMetadata;
 import com.vanquil.prison.tools.tool.ToolType;
@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 public class JumpBoostEnchantment implements
         PotionEffectEnchantment,
         ConfigurableEnchantment<JumpBoostEnchantment.Config> {
-    private static final String NAME = "axe_jump_boost";
+    private static final String NAME = "pickaxe_jump_boost";
 
     public static class Config {
         final int maxLevel = 3;
@@ -36,13 +36,13 @@ public class JumpBoostEnchantment implements
         ToolMetadata metadata = context.toolMetadata();
         int level = metadata.getEnchantmentLevel(this);
         if (level > 0)
-            return new PotionEffect(PotionEffectType.SPEED, 5, level);
+            return new PotionEffect(PotionEffectType.SPEED, 5, level, false, false);
         return null;
     }
 
     @Override
     public ToolType type() {
-        return ToolType.AXE;
+        return ToolType.PICKAXE;
     }
 
     @Override
