@@ -5,14 +5,14 @@ import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 
 public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableEnchantment,
         ConfigurableEnchantment<BackstabEnchantment.Config> {
     public static class Config {
         final int maxLevel = 5;
         final int damagePerHit = 6; // 3 hearts
-        final float baseChance = 0.05f;
-        final float chanceMultiplier = 1.01f;
+        final ChanceConfig chance = new ChanceConfig();
     }
 
     private Config config = new Config();

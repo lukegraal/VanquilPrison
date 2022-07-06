@@ -5,9 +5,9 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 public class PriceConfig {
-    private long initialPrice = 1_000L;
-    private double priceMultiplier = 1.10;
-    private Map<Integer, Long> priceOverrides = Maps.newHashMap();
+    private final long initialPrice = 1_000L;
+    private final double priceMultiplier = 1.10;
+    private final Map<Integer, Long> priceOverrides = Maps.newHashMap();
 
     public long initialPrice() {
         return initialPrice;

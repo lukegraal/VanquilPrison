@@ -8,7 +8,10 @@ import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.WeaponUseContext;
 import com.vanquil.prison.tools.tool.ToolMetadata;
+import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
+import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
+import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -29,17 +32,8 @@ public class BleedEnchantment
         final int maxLevel = 3,
                   effectDurationSeconds = 5,
                   effectAmplifier = 1;
-        final Map<Integer, Long> tokenPriceMap = Maps.newHashMap();
-        final Map<Integer, Float> chanceMap = Maps.newHashMap();
-
-        public Config() {
-            chanceMap.put(1, 0.01f);
-            chanceMap.put(2, 0.02f);
-            chanceMap.put(3, 0.03f);
-            tokenPriceMap.put(1, 1_000_000L);
-            tokenPriceMap.put(2, 2_000_000L);
-            tokenPriceMap.put(3, 3_000_000L);
-        }
+        final PriceConfig pricing = new PriceConfig();
+        final ChanceConfig chance = new ChanceConfig();
 
         public String displayName() {
             return displayName;
@@ -67,8 +61,10 @@ public class BleedEnchantment
         ToolMetadata metadata = ToolMetadata.get(context.item());
         Integer i = metadata.getUpgradeableEnchantments().get(uniqueName());
         if (i != null) {
-            float chance = config.chanceMap.get(i);
-            float val = ThreadLocalRandom.current().nextFloat(1.0f);
+            double chance = config.chance.getChance(i);
+            if (chance > 1.0) chance = 1.0;
+            else if (chance < 0.0) chance = 0.0;
+            double val = RandomUtils.nextDouble();
             return val <= chance;
         }
         return false;
@@ -93,7 +89,7 @@ public class BleedEnchantment
 
     @Override
     public long priceToUpgrade(int level) {
-        return config.tokenPriceMap.get(level);
+        return config.pricing.getPrice(level);
     }
 
     @Override

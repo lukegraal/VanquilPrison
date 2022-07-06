@@ -9,10 +9,10 @@ import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class SpeedEnchantment implements
+public class JumpBoostEnchantment implements
         PotionEffectEnchantment,
-        ConfigurableEnchantment<SpeedEnchantment.Config> {
-    private static final String NAME = "axe_speed";
+        ConfigurableEnchantment<JumpBoostEnchantment.Config> {
+    private static final String NAME = "axe_jump_boost";
 
     public static class Config {
         final int maxLevel = 3;

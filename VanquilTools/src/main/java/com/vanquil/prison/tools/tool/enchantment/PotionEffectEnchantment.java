@@ -4,7 +4,7 @@ import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-public interface PotionEffectEnchantment extends ToolEnchantment {
+public interface PotionEffectEnchantment extends UpgradeableEnchantment {
     PotionEffect effect(EnchantmentUseContext context);
 
     @Override
