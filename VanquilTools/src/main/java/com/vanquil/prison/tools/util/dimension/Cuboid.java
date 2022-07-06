@@ -2,11 +2,12 @@ package com.vanquil.prison.tools.util.dimension;
 
 import com.google.common.collect.Sets;
 import com.vanquil.prison.tools.util.MinMax;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 
 import java.util.Set;
 
@@ -55,8 +56,8 @@ public class Cuboid {
     public void setTo(String world, EnumeratedDistribution<Material> materials) {
         World w = Bukkit.getWorld(world);
         for (BlockPos pos : volumePos()) {
-            Block block = w.getBlockAt(pos.x(), pos.y(), pos.z());
-            block.setType(materials.sample(), false);
+            WorldServer handle = ((CraftWorld) w).getHandle();
+
         }
     }
 }
