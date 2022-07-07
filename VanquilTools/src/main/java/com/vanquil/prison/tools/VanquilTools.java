@@ -7,6 +7,8 @@ import com.vanquil.prison.tools.minimines.MineManager;
 import com.vanquil.prison.tools.tool.enchantment.task.ToolPotionEffectTask;
 import com.vanquil.prison.tools.util.Scheduling;
 import com.vanquil.prison.tools.util.listeners.Listeners;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.file.Path;

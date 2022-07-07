@@ -1,5 +1,6 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
 
+import com.google.common.cache.Cache;
 import com.vanquil.prison.tools.minimines.Mine;
 import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
@@ -11,18 +12,15 @@ import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
-import net.minecraft.server.v1_8_R3.BlockAir;
 import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import java.util.Set;
-
-public class ExplosiveEnchantment implements
+public class CombustiveEnchantment implements
         UpgradeableEnchantment, ConditionalEnchantment,
-        ConfigurableEnchantment<ExplosiveEnchantment.Config> {
-    public static final String NAME = "pickaxe_explosive";
+        ConfigurableEnchantment<CombustiveEnchantment.Config> {
+    public static final String NAME = "pickaxe_combustive";
 
     public static class Config {
         final int maxLevel = 1_000;
@@ -89,11 +87,13 @@ public class ExplosiveEnchantment implements
                     if (distSqr < radSqr && cuboid.containsLocation(BlockPos.of(x, y, z))) {
                         Block blockAt = world.getBlockAt(x, y, z);
                         if (blockAt.getType() != Material.AIR)
-                            blockAt.setType(Material.AIR);
+                            blockAt.setType(Material.OBSIDIAN);
 
                     }
                 }
             }
         }
     }
+
+
 }

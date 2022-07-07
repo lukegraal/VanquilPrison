@@ -1,10 +1,9 @@
 package com.vanquil.prison.tools.command;
 
 import com.google.common.collect.Lists;
-import net.minecraft.server.v1_8_R3.CommandOp;
+import com.vanquil.prison.tools.command.argument.CommandArgument;
 
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.util.List;
 
 public final class CommandOptions {
@@ -13,6 +12,7 @@ public final class CommandOptions {
         private List<String> aliases = Lists.newArrayList();
         private String permission = null;
         private String description = "No description";
+        private CommandArgument<?>[] usage;
 
         public Builder(String name) {
             this.name = name;
@@ -37,26 +37,39 @@ public final class CommandOptions {
             return this;
         }
 
-        public CommandOptions build() {
-            return new CommandOptions(name, description, permission, aliases);
+        public Builder usage(CommandArgument<?>... arguments) {
+            this.usage = arguments;
+            return this;
         }
+
+        public CommandOptions build() {
+            return new CommandOptions(name, description, permission, usage, aliases);
+        }
+    }
+
+    private final String name, description, permission;
+
+    private final CommandArgument<?>[] arguments;
+    private final List<String> aliases;
+
+    private CommandOptions(String name,
+                           String description,
+                           String permission,
+                           CommandArgument<?>[] arguments,
+                           List<String> aliases) {
+        this.name = name;
+        this.permission = permission;
+        this.arguments = arguments;
+        this.description = description;
+        this.aliases = aliases;
     }
 
     public static Builder newBuilder(String name) {
         return new Builder(name);
     }
 
-    private final String name, description, permission;
-    private final List<String> aliases;
-
-    private CommandOptions(String name,
-                           String description,
-                           String permission,
-                           List<String> aliases) {
-        this.name = name;
-        this.permission = permission;
-        this.description = description;
-        this.aliases = aliases;
+    public CommandArgument<?>[] arguments() {
+        return arguments;
     }
 
     public String name() {
