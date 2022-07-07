@@ -8,6 +8,7 @@ import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.material.Material2;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,20 +51,9 @@ public class FortuneEnchantment
         BlockToolUseContext ctx = (BlockToolUseContext) context;
         BlockBreakEvent event = ctx.event();
         Material type = event.getBlock().getType();
-
-    }
-
-    @EventHandler(priority = EventPriority.LOW)
-    public void onBlockBreak(BlockBreakEvent event) {
-        ItemStack itemInHand = event.getPlayer().getItemInHand();
-        if (itemInHand != null
-                && itemInHand.getType() != Material.AIR) {
-            if (ToolType.isOfType(itemInHand, type().materials())) {
-                ToolMetadata metadata = Tools.metadata(itemInHand);
-                BlockToolUseContext ctx = new BlockToolUseContext(itemInHand, event, event.getPlayer(), metadata);
-                apply(ctx);
-            }
-        }
+        event.getBlock().setType(Material.AIR, true);
+        event.setCancelled(true);
+        context.player().getInventory().addItem(Material2.ITEM_FRAME.toItemStack());
     }
 
     @Override

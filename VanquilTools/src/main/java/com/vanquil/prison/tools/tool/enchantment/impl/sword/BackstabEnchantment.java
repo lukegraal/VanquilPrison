@@ -18,7 +18,7 @@ public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableE
     private Config config = new Config();
 
     @Override
-    public boolean proc(EnchantmentUseContext context) {
+    public boolean testCondition(EnchantmentUseContext context) {
         return false;
     }
 

@@ -1,19 +1,25 @@
 package com.vanquil.prison.tools.tool.enchantment;
 
 import com.google.common.collect.Sets;
+import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.FortuneEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.JumpBoostEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.NightVisionEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.SpeedEnchantment;
 
 import java.util.Set;
 
 public class EnchantmentRegistry {
-    public static final SpeedEnchantment AxeSpeedEnchantment = new SpeedEnchantment();
-    public static final JumpBoostEnchantment AxeJumpBoostEnchantment = new JumpBoostEnchantment();
+    public static final SpeedEnchantment PickaxeSpeedEnchantment = new SpeedEnchantment();
+    public static final JumpBoostEnchantment PickaxeJumpBoostEnchantment = new JumpBoostEnchantment();
+    public static final NightVisionEnchantment PickaxeNightVisionEnchantment = new NightVisionEnchantment();
+    public static final FortuneEnchantment PickaxeFortuneEnchantment = new FortuneEnchantment();
     public static final Set<ToolEnchantment> Enchantments = Sets.newHashSet();
 
     static {
-        register(AxeSpeedEnchantment);
-        register(AxeJumpBoostEnchantment);
+        register(PickaxeSpeedEnchantment);
+        register(PickaxeJumpBoostEnchantment);
+        register(PickaxeNightVisionEnchantment);
+        register(PickaxeFortuneEnchantment);
     }
 
     public EnchantmentRegistry() {

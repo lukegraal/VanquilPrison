@@ -1,5 +1,7 @@
 package com.vanquil.prison.tools.util.material;
 
+import org.bukkit.inventory.ItemStack;
+
 public enum Material2 {
     AIR(0, (byte) 0),
     STONE(1, (byte) 0),
@@ -559,15 +561,20 @@ public enum Material2 {
         this.data = data;
     }
 
-    Material2(int id) {
-        this(id, (byte) 0);
-    }
-
     public int id() {
         return id;
     }
 
     public int data() {
         return data;
+    }
+
+    @SuppressWarnings("deprecated")
+    public ItemStack toItemStack(int amount) {
+        return new ItemStack(id, amount, (short) data);
+    }
+
+    public ItemStack toItemStack() {
+        return toItemStack(1);
     }
 }

@@ -57,7 +57,7 @@ public class BleedEnchantment
     }
 
     @Override
-    public boolean proc(EnchantmentUseContext context) {
+    public boolean testCondition(EnchantmentUseContext context) {
         ToolMetadata metadata = ToolMetadata.get(context.item());
         Integer i = metadata.getUpgradeableEnchantments().get(uniqueName());
         if (i != null) {

@@ -30,7 +30,7 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
     public static final String NAME = "weapon_combo";
 
     @Override
-    public boolean proc(EnchantmentUseContext context) {
+    public boolean testCondition(EnchantmentUseContext context) {
         return (COMBO_MAP.get(context.player().getUniqueId()) >= COMBO_PROC_AMOUNT);
     }
 
