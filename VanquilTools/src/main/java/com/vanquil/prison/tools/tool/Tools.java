@@ -77,7 +77,7 @@ public class Tools {
         return conf == null ? builder : builder.name(conf.displayName).wrappedLore(conf.description, 40);
     }
 
-    private static List<String> getEnchantmentDisplay(ToolMetadata metadata) {
+    public static List<String> getEnchantmentDisplay(ToolMetadata metadata) {
         List<String> enchantments = Lists.newArrayList();
         if (metadata != null) {
             for (String ench : metadata.getCustomEnchantments()) {
@@ -90,7 +90,7 @@ public class Tools {
                 int level = entry.getValue();
                 ToolEnchantment enchantment = EnchantmentRegistry.findEnchantment(key);
                 if (enchantment != null)
-                    enchantments.add(C.format(enchantment.displayName() + " "
+                    enchantments.add(C.format(enchantment.displayName() + "_"
                             + RomanNumeral.toRomanNumeral(level)));
             }
         }
@@ -119,8 +119,14 @@ public class Tools {
             List<String> enchantments = getEnchantmentDisplay(metadata);
             ItemBuilder builder = ItemBuilder.of(itemStack);
             applyNameAndDescription(metadata.toolType(), builder);
-            if (enchantments.size() > 0)
-                builder.addWrappedLore("\n" + String.join("&7, &r", enchantments), 40);
+            if (enchantments.size() > 0) {
+                for (String s : ItemBuilder.wrap("\n" + String.join("&7, &r", enchantments), 40)) {
+                    String x = s.replace("\n", "")
+                            .replace("\r", "")
+                            .replace("_", " ");
+                    builder.addLore(x);
+                }
+            }
             itemStack = builder.build();
         }
         return itemStack;

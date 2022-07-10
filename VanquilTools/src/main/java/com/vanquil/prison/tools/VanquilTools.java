@@ -9,6 +9,7 @@ import com.vanquil.prison.tools.tool.command.ToolCommand;
 import com.vanquil.prison.tools.tool.enchantment.EnchantmentRegistry;
 import com.vanquil.prison.tools.tool.enchantment.task.ToolPotionEffectTask;
 import com.vanquil.prison.tools.util.Scheduling;
+import com.vanquil.prison.tools.util.container.ContainerListener;
 import com.vanquil.prison.tools.util.listeners.Listeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +24,7 @@ public class VanquilTools extends JavaPlugin {
     public void onEnable() {
         basePath = getDataFolder().toPath();
         Listeners.registerListener(new CommandListener());
+        Listeners.registerListener(new ContainerListener());
 
         // Load objects - don't actually run any code, just call the static initializer.
         EnchantmentRegistry.load();

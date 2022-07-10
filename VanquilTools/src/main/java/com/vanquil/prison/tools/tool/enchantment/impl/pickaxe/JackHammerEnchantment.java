@@ -23,6 +23,7 @@ public class JackHammerEnchantment implements
 
     public static class Config {
         final String displayName = "&cJack Hammer";
+        final String description = "Increase your chance to combust an entire layer of the mine at once.";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -56,6 +57,11 @@ public class JackHammerEnchantment implements
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

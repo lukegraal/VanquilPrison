@@ -1,6 +1,5 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
 
-import com.google.common.cache.Cache;
 import com.vanquil.prison.tools.minimines.Mine;
 import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
@@ -25,6 +24,7 @@ public class CombustiveEnchantment implements
 
     public static class Config {
         final String displayName = "&cCombustive";
+        final String description = "Implodes, causing blocks to become obsidian which you can mine for tokens.";
         final int maxLevel = 1_000;
         final int explosionRadius = 10;
         final PriceConfig pricing = new PriceConfig();
@@ -51,6 +51,11 @@ public class CombustiveEnchantment implements
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

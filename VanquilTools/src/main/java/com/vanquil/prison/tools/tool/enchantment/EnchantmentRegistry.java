@@ -3,6 +3,8 @@ package com.vanquil.prison.tools.tool.enchantment;
 import com.google.common.collect.Sets;
 import com.vanquil.prison.tools.VanquilTools;
 import com.vanquil.prison.tools.config.Config;
+import com.vanquil.prison.tools.tool.ToolType;
+import com.vanquil.prison.tools.tool.enchantment.container.EnchantmentContainer;
 import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.*;
 import com.vanquil.prison.tools.tool.enchantment.listener.EnchantmentListener;
 
@@ -20,6 +22,11 @@ public class EnchantmentRegistry {
 
     public static final Set<ToolEnchantment> Enchantments = Sets.newHashSet();
     public static final Set<PotionEffectEnchantment> PotionEffectEnchantments = Sets.newHashSet();
+
+    public static final Config<EnchantmentContainer.Config> ContainerConfig = new Config<>(
+            VanquilTools.basePath.resolve("enchantment_container.json"),
+            EnchantmentContainer.Config.class, EnchantmentContainer.Config::new
+    );
 
     static {
         register(PickaxeSpeedEnchantment);
@@ -61,5 +68,15 @@ public class EnchantmentRegistry {
 
     public static void load() {
         EnchantmentListener.register();
+    }
+
+    public static Set<ToolEnchantment> enchantmentsFor(ToolType toolType) {
+        Set<ToolEnchantment> set = Sets.newHashSet();
+        for (ToolEnchantment enchantment : Enchantments) {
+            if (enchantment.type() == toolType) {
+                set.add(enchantment);
+            }
+        }
+        return set;
     }
 }

@@ -1,20 +1,12 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
 
-import com.vanquil.prison.tools.tool.ToolMetadata;
 import com.vanquil.prison.tools.tool.ToolType;
-import com.vanquil.prison.tools.tool.Tools;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
-import com.vanquil.prison.tools.util.material.Material2;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class FortuneEnchantment
         implements UpgradeableEnchantment, ConfigurableEnchantment<FortuneEnchantment.Config> {
@@ -22,6 +14,7 @@ public class FortuneEnchantment
 
     public static class Config {
         final String displayName = "&cFortune";
+        final String description = "Multiplies the amount of blocks you get when you mine just one.";
         final int maxLevel = 100;
         final PriceConfig pricing = new PriceConfig();
     }
@@ -44,6 +37,11 @@ public class FortuneEnchantment
     }
 
     @Override
+    public String description() {
+        return config.description;
+    }
+
+    @Override
     public String uniqueName() {
         return NAME;
     }
@@ -56,11 +54,10 @@ public class FortuneEnchantment
     @Override
     public void apply(EnchantmentUseContext context) {
         BlockToolUseContext ctx = (BlockToolUseContext) context;
-        BlockBreakEvent event = ctx.event();
-        Material type = event.getBlock().getType();
-        event.getBlock().setType(Material.AIR, true);
-        event.setCancelled(true);
-        context.player().getInventory().addItem(Material2.ITEM_FRAME.toItemStack());
+        int level = context.toolMetadata().getEnchantmentLevel(this);
+        if (level > 0) {
+            ctx.manipulateDropAmount(i -> i*level);
+        }
     }
 
     @Override

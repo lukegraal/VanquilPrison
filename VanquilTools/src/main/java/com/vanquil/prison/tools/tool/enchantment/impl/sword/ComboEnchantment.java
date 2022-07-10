@@ -50,6 +50,11 @@ public class ComboEnchantment implements ConditionalEnchantment, ToolEnchantment
     }
 
     @Override
+    public String description() {
+        return null;
+    }
+
+    @Override
     public void apply(EnchantmentUseContext context) {
 
     }

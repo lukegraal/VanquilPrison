@@ -1,13 +1,12 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.sword;
 
-import com.google.common.collect.Maps;
+import com.vanquil.prison.tools.tool.ToolMetadata;
 import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.WeaponUseContext;
-import com.vanquil.prison.tools.tool.ToolMetadata;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
@@ -15,9 +14,6 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class BleedEnchantment
         implements ConditionalEnchantment, UpgradeableEnchantment, ConfigurableEnchantment<BleedEnchantment.Config> {
@@ -82,7 +78,12 @@ public class BleedEnchantment
 
     @Override
     public String displayName() {
-        return null;
+        return config.displayName;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

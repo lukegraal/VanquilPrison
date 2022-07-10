@@ -1,6 +1,5 @@
 package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
 
-import com.vanquil.prison.tools.minimines.Mine;
 import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
@@ -12,7 +11,6 @@ import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -25,6 +23,7 @@ public class MultiDirectionalEnchantment implements
 
     public static class Config {
         final String displayName = "&cMultiDirectional";
+        final String description = "Increases your change to combust the X and Z axes of the block.";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -45,6 +44,11 @@ public class MultiDirectionalEnchantment implements
     @Override
     public ToolType type() {
         return ToolType.PICKAXE;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

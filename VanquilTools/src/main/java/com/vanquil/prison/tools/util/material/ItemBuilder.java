@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.awt.*;
 import java.util.List;
 
 public class ItemBuilder {
@@ -66,7 +65,7 @@ public class ItemBuilder {
         return lore(lore);
     }
 
-    private static List<String> wrap(String line, int length) {
+    public static List<String> wrap(String line, int length) {
         String[] split = WordUtils.wrap(line, length).split("\n");
         List<String> list = Lists.newArrayList();
         String lastColor = "";

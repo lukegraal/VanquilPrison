@@ -17,6 +17,7 @@ public class JumpBoostEnchantment implements
 
     public static class Config {
         final String displayName = "&cJump Boost";
+        final String description = "Gives you the Jump Boost effect while you're holding the tool.";
         final int maxLevel = 3;
         final PriceConfig pricing = new PriceConfig();
     }
@@ -55,6 +56,11 @@ public class JumpBoostEnchantment implements
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

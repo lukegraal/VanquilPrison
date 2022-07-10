@@ -3,17 +3,9 @@ package com.vanquil.prison.tools.util.dimension;
 import com.google.common.collect.Sets;
 import com.vanquil.prison.tools.util.MinMax;
 import com.vanquil.prison.tools.util.material.Material2;
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.IBlockData;
-import net.minecraft.server.v1_8_R3.WorldServer;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 
 import java.util.Set;
 

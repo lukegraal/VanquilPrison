@@ -14,6 +14,7 @@ public final class NightVisionEnchantment
 
     public static class Config {
         final String displayName = "&cNight Vision";
+        final String description = "Gives you the Night Vision effect while you're holding the tool.";
         final long price = 1_000;
     }
 
@@ -52,6 +53,11 @@ public final class NightVisionEnchantment
     @Override
     public String displayName() {
         return C.format(config.displayName);
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

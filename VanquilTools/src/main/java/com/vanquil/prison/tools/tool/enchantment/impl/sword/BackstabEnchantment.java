@@ -6,6 +6,7 @@ import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
+import org.apache.commons.lang.math.RandomUtils;
 
 public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableEnchantment,
         ConfigurableEnchantment<BackstabEnchantment.Config> {
@@ -13,6 +14,8 @@ public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableE
 
     public static class Config {
         final int maxLevel = 5;
+        final String displayName = "&eBackstab";
+        final String description = "Increases damage when you strike a player with your sword from behind.";
         final int damagePerHit = 6; // 3 hearts
         final ChanceConfig chance = new ChanceConfig();
     }
@@ -21,7 +24,7 @@ public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableE
 
     @Override
     public boolean testCondition(EnchantmentUseContext context) {
-        return false;
+        return RandomUtils.nextDouble() <= config.chance.getChance(context.toolMetadata().getEnchantmentLevel(this));
     }
 
     @Override
@@ -46,7 +49,12 @@ public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableE
 
     @Override
     public String displayName() {
-        return NAME;
+        return config.displayName;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

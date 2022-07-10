@@ -17,6 +17,7 @@ public class SpeedEnchantment implements
 
     public static class Config {
         final String displayName = "&cSpeed";
+        final String description = "Gives you the Speed effect while you're holding the tool.";
         final int maxLevel = 3;
         final PriceConfig pricing = new PriceConfig();
     }
@@ -55,6 +56,11 @@ public class SpeedEnchantment implements
     @Override
     public String displayName() {
         return C.format(config.displayName);
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override

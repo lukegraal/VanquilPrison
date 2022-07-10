@@ -11,5 +11,7 @@ public interface ToolEnchantment extends Listener {
 
     String displayName();
 
+    String description();
+
     void apply(EnchantmentUseContext context);
 }

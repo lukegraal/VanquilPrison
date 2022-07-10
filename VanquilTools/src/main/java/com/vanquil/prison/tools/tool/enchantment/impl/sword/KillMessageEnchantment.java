@@ -26,6 +26,8 @@ public final class KillMessageEnchantment implements ToolEnchantment,
     public static final String NAME = "kill_message";
 
     public static class Config {
+        final String displayName = "Kill Message";
+        final String description = "Display a funny kill message in the chat when you murder someone.";
         transient final EnumeratedDistribution<String> distro;
         final Map<String, Double> deathMessages = new HashMap<String, Double>() {{
             put("{0} took a massive L while fighting {1}.", 0.2);
@@ -69,6 +71,11 @@ public final class KillMessageEnchantment implements ToolEnchantment,
     @Override
     public String displayName() {
         return null;
+    }
+
+    @Override
+    public String description() {
+        return config.description;
     }
 
     @Override
