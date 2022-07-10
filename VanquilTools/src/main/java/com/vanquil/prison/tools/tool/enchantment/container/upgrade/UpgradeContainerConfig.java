@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UpgradeContainerConfig {
     final String addAmount = "&7Add {0} &7levels: &a+{1}";
-    final String price = "&7Price: &a{0} tokens";
+    final String price = "&7Price: &d&l{0} tokens";
 
     public static class UpgradeButtonConfig
             extends ContainerItemConfig {
@@ -82,7 +82,7 @@ public class UpgradeContainerConfig {
             closeCharacter = 'B';
             List<String> f = Lists.newArrayList();
             f.add("#########");
-            f.add("##A###B##");
+            f.add("##A#@#B##");
             f.add("#########");
             format = f;
 
@@ -98,6 +98,13 @@ public class UpgradeContainerConfig {
             }});
             itemMap.put("A", new UpgradeButtonConfig() {{
                 displayName = "&a&lConfirm transaction";
+                modifier = 0;
+            }});
+            itemMap.put("@", new UpgradeButtonConfig() {{
+                displayName = "&7Price: &d&l{0}";
+                lore = Lists.newArrayList(
+                        "If you purchase this item, the amount",
+                        "above will be withdrawn from your account.");
                 modifier = 0;
             }});
         }
