@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ContainerItemConfig {
-    protected int amount;
+    protected int amount = 1;
     protected Material2 material;
     protected String displayName;
     protected List<String> lore = Collections.emptyList();
