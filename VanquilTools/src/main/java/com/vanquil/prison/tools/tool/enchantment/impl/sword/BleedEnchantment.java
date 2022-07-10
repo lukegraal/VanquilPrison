@@ -27,8 +27,8 @@ public class BleedEnchantment
     public static class Config {
         final String displayName = "Bleed",
                      description = "Gives you a chance to inflict wither effects on your opponent",
-                     attackerMessage = "You gave %s a wither effect for 5 seconds!",
-                     targetMessage = "%s's sword gave you the wither effect for 5 seconds!";
+                     attackerMessage = "You gave {0} a wither effect for 5 seconds!",
+                     targetMessage = "{0}'s sword gave you the wither effect for 5 seconds!";
         final int maxLevel = 3,
                   effectDurationSeconds = 5,
                   effectAmplifier = 1;
@@ -78,6 +78,11 @@ public class BleedEnchantment
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String displayName() {
+        return null;
     }
 
     @Override

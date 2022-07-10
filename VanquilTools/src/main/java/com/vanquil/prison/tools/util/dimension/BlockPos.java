@@ -24,4 +24,13 @@ public class BlockPos {
     public int z() {
         return z;
     }
+
+    @Override
+    public String toString() {
+        return "BlockPos{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
 }

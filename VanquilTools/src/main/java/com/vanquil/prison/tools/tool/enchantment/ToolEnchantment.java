@@ -9,5 +9,7 @@ public interface ToolEnchantment extends Listener {
 
     String uniqueName();
 
+    String displayName();
+
     void apply(EnchantmentUseContext context);
 }

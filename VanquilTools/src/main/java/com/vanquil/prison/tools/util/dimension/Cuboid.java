@@ -9,6 +9,7 @@ import net.minecraft.server.v1_8_R3.IBlockData;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -80,15 +81,12 @@ public class Cuboid {
         return volumePositions;
     }
 
+    @SuppressWarnings("deprecated")
     public void setTo(String world, EnumeratedDistribution<Material2> materials) {
         World w = Bukkit.getWorld(world);
         for (BlockPos pos : volumePos()) {
-            WorldServer handle = ((CraftWorld) w).getHandle();
-            BlockPosition blockPos = new BlockPosition(pos.x(), pos.y(), pos.z());
             Material2 sample = materials.sample();
-            IBlockData blockData = Block.getById(sample.id()).fromLegacyData(sample.data());
-            boolean success = handle.setTypeAndData(blockPos, blockData, 2);
-            if (success) handle.notify(blockPos);
+            w.getBlockAt(pos.x(), pos.y(), pos.z()).setTypeIdAndData(sample.id(), sample.data(), false);
         }
     }
 }

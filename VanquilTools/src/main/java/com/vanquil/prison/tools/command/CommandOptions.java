@@ -8,18 +8,17 @@ import java.util.List;
 
 public final class CommandOptions {
     public static class Builder {
-        private String name;
         private List<String> aliases = Lists.newArrayList();
-        private String permission = null;
-        private String description = "No description";
-        private CommandArgument<?>[] usage;
+        private String name, permission = null, description = "No description specified";
+        private CommandArgument<?>[] usage = {};
 
         public Builder(String name) {
             this.name = name;
         }
 
-        public void permission(@Nullable String permission) {
+        public Builder permission(@Nullable String permission) {
             this.permission = permission;
+            return this;
         }
 
         public Builder description(String description) {
@@ -38,6 +37,11 @@ public final class CommandOptions {
         }
 
         public Builder usage(CommandArgument<?>... arguments) {
+            for (int i = 0; i < arguments.length; i++) {
+                if (arguments[i].vararg() && arguments.length-1 != i)
+                    throw new IllegalArgumentException("Vararg argument must be at the end of the list");
+            }
+
             this.usage = arguments;
             return this;
         }
@@ -48,7 +52,6 @@ public final class CommandOptions {
     }
 
     private final String name, description, permission;
-
     private final CommandArgument<?>[] arguments;
     private final List<String> aliases;
 

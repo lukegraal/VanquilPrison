@@ -27,12 +27,12 @@ public final class KillMessageEnchantment implements ToolEnchantment,
 
     public static class Config {
         transient final EnumeratedDistribution<String> distro;
-        final Map<String, Double> deathMessages = new HashMap<>() {{
-            put("%s took a massive L while fighting %s.", 0.2);
-            put("%s got scared while fighting %s.", 0.2);
-            put("%s dropped his sword while running away from %s.", 0.2);
-            put("%s forgot how to Minecraft upon seeing %s.", 0.2);
-            put("%s gave up mid-fight with %s.", 0.2);
+        final Map<String, Double> deathMessages = new HashMap<String, Double>() {{
+            put("{0} took a massive L while fighting {1}.", 0.2);
+            put("{0} got scared while fighting {1}.", 0.2);
+            put("{0} dropped his sword while running away from {1}.", 0.2);
+            put("{0} forgot how to Minecraft upon seeing {1}.", 0.2);
+            put("{0} gave up mid-fight with {1}.", 0.2);
         }};
 
         {
@@ -64,6 +64,11 @@ public final class KillMessageEnchantment implements ToolEnchantment,
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String displayName() {
+        return null;
     }
 
     @Override

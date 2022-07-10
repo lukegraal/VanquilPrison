@@ -9,6 +9,8 @@ import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 
 public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableEnchantment,
         ConfigurableEnchantment<BackstabEnchantment.Config> {
+    private static final String NAME = "sword_backstab";
+
     public static class Config {
         final int maxLevel = 5;
         final int damagePerHit = 6; // 3 hearts
@@ -39,7 +41,12 @@ public class BackstabEnchantment implements ConditionalEnchantment, UpgradeableE
 
     @Override
     public String uniqueName() {
-        return null;
+        return NAME;
+    }
+
+    @Override
+    public String displayName() {
+        return NAME;
     }
 
     @Override

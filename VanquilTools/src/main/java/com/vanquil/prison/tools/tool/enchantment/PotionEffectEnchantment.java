@@ -11,6 +11,6 @@ public interface PotionEffectEnchantment extends UpgradeableEnchantment {
     default void apply(EnchantmentUseContext context) {
         Player player = context.player();
         PotionEffect effect = effect(context);
-        player.addPotionEffect(effect);
+        player.addPotionEffect(effect, true);
     }
 }

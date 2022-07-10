@@ -18,15 +18,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class ToolPotionEffectTask implements Runnable {
-    private static final Set<ToolEnchantment> ENCHANTMENTS = EnchantmentRegistry.potionEffectEnchantments();
+    private static final Set<PotionEffectEnchantment> ENCHANTMENTS = EnchantmentRegistry.PotionEffectEnchantments;
     private static final Map<ToolType, Set<PotionEffectEnchantment>> SET_MAP = Maps.newHashMap();
 
     static {
-        for (ToolEnchantment enchantment : ENCHANTMENTS) {
+        for (PotionEffectEnchantment enchantment : ENCHANTMENTS) {
             Set<PotionEffectEnchantment> set = SET_MAP.get(enchantment.type());
-            PotionEffectEnchantment e = (PotionEffectEnchantment) enchantment;
-            if (set != null) set.add(e);
-            else SET_MAP.put(enchantment.type(), Sets.newHashSet(e));
+            if (set != null) set.add(enchantment);
+            else SET_MAP.put(enchantment.type(), Sets.newHashSet(enchantment));
         }
     }
 
@@ -42,8 +41,11 @@ public class ToolPotionEffectTask implements Runnable {
                         ToolType type = entry.getKey();
                         if (ToolType.isOfType(itemInHand, type.materials())) {
                             for (PotionEffectEnchantment e : entry.getValue()) {
-                                EnchantmentUseContext c = new EnchantmentUseContext(itemInHand, player, metadata);
-                                e.apply(c);
+                                Integer level = metadata.getUpgradeableEnchantments().get(e.uniqueName());
+                                if (level != null && level > 0) {
+                                    EnchantmentUseContext c = new EnchantmentUseContext(itemInHand, player, metadata);
+                                    e.apply(c);
+                                }
                             }
                         }
                     }

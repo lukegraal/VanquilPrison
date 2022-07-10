@@ -10,6 +10,7 @@ import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
 import org.apache.commons.lang.math.RandomUtils;
@@ -23,6 +24,7 @@ public class CombustiveEnchantment implements
     public static final String NAME = "pickaxe_combustive";
 
     public static class Config {
+        final String displayName = "&cCombustive";
         final int maxLevel = 1_000;
         final int explosionRadius = 10;
         final PriceConfig pricing = new PriceConfig();
@@ -49,6 +51,11 @@ public class CombustiveEnchantment implements
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String displayName() {
+        return C.format(config.displayName);
     }
 
     @Override
@@ -88,7 +95,6 @@ public class CombustiveEnchantment implements
                         Block blockAt = world.getBlockAt(x, y, z);
                         if (blockAt.getType() != Material.AIR)
                             blockAt.setType(Material.OBSIDIAN);
-
                     }
                 }
             }

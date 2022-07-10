@@ -6,6 +6,7 @@ import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.PotionEffectEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.C;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -15,6 +16,7 @@ public class JumpBoostEnchantment implements
     private static final String NAME = "pickaxe_jump_boost";
 
     public static class Config {
+        final String displayName = "&cJump Boost";
         final int maxLevel = 3;
         final PriceConfig pricing = new PriceConfig();
     }
@@ -32,11 +34,16 @@ public class JumpBoostEnchantment implements
     }
 
     @Override
+    public String displayName() {
+        return C.format(config.displayName);
+    }
+
+    @Override
     public PotionEffect effect(EnchantmentUseContext context) {
         ToolMetadata metadata = context.toolMetadata();
         int level = metadata.getEnchantmentLevel(this);
         if (level > 0)
-            return new PotionEffect(PotionEffectType.SPEED, 5, level, false, false);
+            return new PotionEffect(PotionEffectType.SPEED, 120, level-1, false, false);
         return null;
     }
 

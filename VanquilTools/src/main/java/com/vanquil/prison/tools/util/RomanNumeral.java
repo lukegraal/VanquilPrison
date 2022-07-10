@@ -5,7 +5,6 @@ public class RomanNumeral {
         StringBuilder builder = new StringBuilder();
         int j = i;
         while (j != 0) {
-            System.out.println(j);
             if (j >= 1000) {
                 builder.append("M"); j -= 1000;
             } else if (j >= 500) {

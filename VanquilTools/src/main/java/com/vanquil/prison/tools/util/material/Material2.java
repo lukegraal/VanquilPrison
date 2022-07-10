@@ -554,7 +554,8 @@ public enum Material2 {
     MUSIC_DISC_11(2266, (byte) 0),
     MUSIC_DISC_WAIT(2267, (byte) 0);
 
-    private final int id, data;
+    private final int id;
+    private final byte data;
 
     Material2(int id, byte data) {
         this.id = id;
@@ -565,13 +566,13 @@ public enum Material2 {
         return id;
     }
 
-    public int data() {
+    public byte data() {
         return data;
     }
 
     @SuppressWarnings("deprecated")
     public ItemStack toItemStack(int amount) {
-        return new ItemStack(id, amount, (short) data);
+        return new ItemStack(id, amount, data);
     }
 
     public ItemStack toItemStack() {

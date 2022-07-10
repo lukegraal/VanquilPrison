@@ -15,20 +15,39 @@ import java.util.Map;
 
 public class ToolMetadata {
     public static final String NBT_KEY = "tool_metadata";
+    @SerializedName("type")
+    private final ToolType toolType;
     @SerializedName("upgradeable_enchantments")
     private final Map<String, Integer> upgradeableEnchantments = Maps.newHashMap();
-    @SerializedName("vanilla_enchantments")
-    private final Map<String, Integer> vanillaEnchantments = Maps.newHashMap();
     @SerializedName("custom_enchantments")
     private final List<String> customEnchantments = Lists.newArrayList();
 
-    public ToolMetadata() {
+    public ToolMetadata(ToolType toolType) {
+        this.toolType = toolType;
+    }
+
+    public ToolType toolType() {
+        return toolType;
     }
 
     public static ToolMetadata get(ItemStack item) {
         net.minecraft.server.v1_8_R3.ItemStack stack = CraftItemStack.asNMSCopy(item);
         String string = stack.getTag().getString(NBT_KEY);
         return VanquilTools.GSON.fromJson(string, ToolMetadata.class);
+    }
+
+    public void addEnchantment(ToolEnchantment enchantment) {
+        if (enchantment instanceof UpgradeableEnchantment) {
+            String key = enchantment.uniqueName();
+            int level = upgradeableEnchantments.getOrDefault(key, 0);
+            upgradeableEnchantments.put(key, level+1);
+        } else {
+            customEnchantments.add(enchantment.uniqueName());
+        }
+    }
+
+    public void setEnchantmentLevel(UpgradeableEnchantment enchantment, int level) {
+        upgradeableEnchantments.put(enchantment.uniqueName(), level);
     }
 
     public int getEnchantmentLevel(UpgradeableEnchantment enchantment) {
@@ -44,14 +63,6 @@ public class ToolMetadata {
         } else {
             return customEnchantments.contains(enchantment.uniqueName());
         }
-    }
-
-    public boolean hasVanillaEnchantment(Enchantment enchantment) {
-        return vanillaEnchantments.containsKey(enchantment.getName());
-    }
-
-    public Map<String, Integer> getVanillaEnchantments() {
-        return vanillaEnchantments;
     }
 
     public Map<String, Integer> getUpgradeableEnchantments() {

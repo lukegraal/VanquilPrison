@@ -9,6 +9,7 @@ import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
 import org.apache.commons.lang.RandomStringUtils;
@@ -23,6 +24,7 @@ public class MultiDirectionalEnchantment implements
     public static final String NAME = "pickaxe_multi_directional";
 
     public static class Config {
+        final String displayName = "&cMultiDirectional";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -43,6 +45,11 @@ public class MultiDirectionalEnchantment implements
     @Override
     public ToolType type() {
         return ToolType.PICKAXE;
+    }
+
+    @Override
+    public String displayName() {
+        return C.format(config.displayName);
     }
 
     @Override

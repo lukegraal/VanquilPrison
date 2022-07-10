@@ -8,6 +8,7 @@ import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.material.Material2;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -20,6 +21,7 @@ public class FortuneEnchantment
     public static final String NAME = "pickaxe_fortune";
 
     public static class Config {
+        final String displayName = "&cFortune";
         final int maxLevel = 100;
         final PriceConfig pricing = new PriceConfig();
     }
@@ -44,6 +46,11 @@ public class FortuneEnchantment
     @Override
     public String uniqueName() {
         return NAME;
+    }
+
+    @Override
+    public String displayName() {
+        return C.format(config.displayName);
     }
 
     @Override

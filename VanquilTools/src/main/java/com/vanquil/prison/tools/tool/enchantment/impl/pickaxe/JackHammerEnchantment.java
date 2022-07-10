@@ -8,6 +8,7 @@ import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
+import com.vanquil.prison.tools.util.C;
 import com.vanquil.prison.tools.util.dimension.BlockPos;
 import com.vanquil.prison.tools.util.dimension.Cuboid;
 import org.apache.commons.lang.math.RandomUtils;
@@ -21,6 +22,7 @@ public class JackHammerEnchantment implements
     public static final String NAME = "pickaxe_jack_hammer";
 
     public static class Config {
+        final String displayName = "&cJack Hammer";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -41,7 +43,9 @@ public class JackHammerEnchantment implements
     @Override
     public boolean testCondition(EnchantmentUseContext context) {
         double chance = config.chance.getChance(context.toolMetadata().getEnchantmentLevel(this));
-        return RandomUtils.nextDouble() <= chance;
+        boolean b = RandomUtils.nextDouble() <= chance;
+        System.out.println("testing condition: " + b);
+        return b;
     }
 
     @Override
@@ -55,7 +59,13 @@ public class JackHammerEnchantment implements
     }
 
     @Override
+    public String displayName() {
+        return C.format(config.displayName);
+    }
+
+    @Override
     public void apply(EnchantmentUseContext context) {
+        System.out.println("applying");
         BlockToolUseContext ctx = (BlockToolUseContext) context;
         Cuboid cuboid = ctx.mine().config().cuboid();
         int y = ctx.event().getBlock().getY();

@@ -1,0 +1,5 @@
+name: VanquilTools
+main: com.vanquil.prison.tools.VanquilTools
+version: 1.0-SNAPSHOT
+author: Tectoxic (Luke)
+api-version: 1.8
