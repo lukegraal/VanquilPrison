@@ -4,7 +4,10 @@ import com.google.common.collect.Sets;
 import com.vanquil.prison.tools.VanquilTools;
 import com.vanquil.prison.tools.config.Config;
 import com.vanquil.prison.tools.tool.ToolType;
+import com.vanquil.prison.tools.tool.enchantment.config.CustomEnchantmentConfig;
 import com.vanquil.prison.tools.tool.enchantment.container.EnchantmentContainer;
+import com.vanquil.prison.tools.tool.enchantment.impl.CommandEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.impl.axe.FortuneEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.*;
 import com.vanquil.prison.tools.tool.enchantment.listener.EnchantmentListener;
 
@@ -27,6 +30,10 @@ public class EnchantmentRegistry {
             VanquilTools.basePath.resolve("enchantment_container.json"),
             EnchantmentContainer.Config.class, EnchantmentContainer.Config::new
     );
+    public static final Config<CustomEnchantmentConfig> CustomEnchantmentsConfig = new Config<>(
+            VanquilTools.basePath.resolve("custom_enchantments.json"),
+            CustomEnchantmentConfig.class, CustomEnchantmentConfig::new
+    );
 
     static {
         register(PickaxeSpeedEnchantment);
@@ -36,6 +43,19 @@ public class EnchantmentRegistry {
         register(PickaxeJackHammerEnchantment);
         register(PickaxeMultiDirectionalEnchantment);
         register(PickaxeCombustiveEnchantment);
+        registerCustomEnchantments();
+    }
+
+    private static void registerCustomEnchantments() {
+        CustomEnchantmentConfig instance = CustomEnchantmentsConfig.instance();
+        for (CommandEnchantment.Config enchantment : instance.customEnchantments()) {
+            if (findEnchantment(enchantment.getUniqueName()) != null) {
+                System.out.println("Duplicate enchantment (same unique name): " + enchantment.getUniqueName());
+            } else {
+                CommandEnchantment ench = new CommandEnchantment(enchantment);
+                Enchantments.add(ench);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

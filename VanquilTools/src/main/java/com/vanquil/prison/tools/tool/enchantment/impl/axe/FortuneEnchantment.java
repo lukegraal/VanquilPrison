@@ -1,4 +1,4 @@
-package com.vanquil.prison.tools.tool.enchantment.impl.pickaxe;
+package com.vanquil.prison.tools.tool.enchantment.impl.axe;
 
 import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
