@@ -16,7 +16,8 @@ public abstract class Container implements InventoryHolder  {
         RETURN_TO_PARENT, CLOSE_COMPLETELY
     }
 
-    private final int size;
+    private int size;
+    private String title = "Container";
     private final Map<Integer, ContainerClickable> clickableMap;
     private Container parent = null;
     private CloseBehaviour closeBehaviour = CloseBehaviour.RETURN_TO_PARENT;
@@ -32,10 +33,8 @@ public abstract class Container implements InventoryHolder  {
         this.size = config.format().size() * 9;
         this.clickableMap = Maps.newHashMap();
         for (int i = 0; i < config.format().size(); i++) {
-            int row = i+1;
             String line = config.format().get(i);
             for (int j = 0; j < line.toCharArray().length; j++) {
-                int col = j+1;
                 char c = line.charAt(j);
                 ContainerItemConfig conf = config.itemMap().get(Character.toString(c));
                 if (conf != null) {
@@ -43,7 +42,7 @@ public abstract class Container implements InventoryHolder  {
                             .name(conf.displayName())
                             .lore(conf.lore())
                             .build();
-                    setItem(row, col, stack, (player, type) -> {
+                    setItem(i, j, stack, (player, type) -> {
                         if (c == 'X') {
                             switch (closeBehaviour) {
                                 case CLOSE_COMPLETELY: {
@@ -60,6 +59,14 @@ public abstract class Container implements InventoryHolder  {
                 }
             }
         }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public Container() {
@@ -79,7 +86,7 @@ public abstract class Container implements InventoryHolder  {
     }
 
     protected void setItem(int row, int col, ItemStack item) {
-        clickableMap.put((row*col)-1, new ContainerClickable(item, ClickableAction.UNCLICKABLE));
+        clickableMap.put((row*9+col), new ContainerClickable(item, ClickableAction.UNCLICKABLE));
     }
 
     protected void setItem(int slot, ItemStack item, ClickableAction action) {
@@ -87,7 +94,7 @@ public abstract class Container implements InventoryHolder  {
     }
 
     protected void setItem(int row, int col, ItemStack item, ClickableAction action) {
-        clickableMap.put((row*col)-1, new ContainerClickable(item, action));
+        clickableMap.put((row*9+col), new ContainerClickable(item, action));
     }
 
     protected void setItem(int slot, ItemStack item, ClickableAction action, boolean locked) {
@@ -95,7 +102,7 @@ public abstract class Container implements InventoryHolder  {
     }
 
     protected void setItem(int row, int col, ItemStack item, ClickableAction action, boolean locked) {
-        clickableMap.put((row*col)-1, new ContainerClickable(item, action, locked));
+        clickableMap.put((row*9+col), new ContainerClickable(item, action, locked));
     }
 
     public void parent(Container parent) {
@@ -109,8 +116,9 @@ public abstract class Container implements InventoryHolder  {
     @Override
     public Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(this, size);
-        for (Map.Entry<Integer, ContainerClickable> entry : clickableMap.entrySet())
+        for (Map.Entry<Integer, ContainerClickable> entry : clickableMap.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue().item());
+        }
         return inventory;
     }
 }

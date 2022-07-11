@@ -4,8 +4,8 @@ import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.MineToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
@@ -23,7 +23,7 @@ public class MultiDirectionalEnchantment implements
 
     public static class Config {
         final String displayName = "&cMultiDirectional";
-        final String description = "Increases your change to combust the X and Z axes of the block.";
+        final String description = "&7Increases your change to combust the X and Z axes of the block.";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -63,13 +63,14 @@ public class MultiDirectionalEnchantment implements
 
     @Override
     public boolean testCondition(EnchantmentUseContext context) {
+        if (!(context instanceof MineToolUseContext)) return false;
         double chance = config.chance.getChance(context.toolMetadata().getEnchantmentLevel(this));
         return (RandomUtils.nextDouble() <= chance);
     }
 
     @Override
     public void apply(EnchantmentUseContext context) {
-        BlockToolUseContext ctx = (BlockToolUseContext) context;
+        MineToolUseContext ctx = (MineToolUseContext) context;
         Block b = ctx.event().getBlock();
         int x = b.getX(), z = b.getZ();
         Cuboid cuboid = ctx.mine().config().cuboid();

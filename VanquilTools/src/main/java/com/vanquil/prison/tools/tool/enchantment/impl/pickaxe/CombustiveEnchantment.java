@@ -5,8 +5,8 @@ import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.MineToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
@@ -24,7 +24,7 @@ public class CombustiveEnchantment implements
 
     public static class Config {
         final String displayName = "&cCombustive";
-        final String description = "Implodes, causing blocks to become obsidian which you can mine for tokens.";
+        final String description = "&7Implodes, causing blocks to become obsidian which you can mine for tokens.";
         final int maxLevel = 1_000;
         final int explosionRadius = 10;
         final PriceConfig pricing = new PriceConfig();
@@ -75,6 +75,10 @@ public class CombustiveEnchantment implements
 
     @Override
     public boolean testCondition(EnchantmentUseContext context) {
+        if (!(context instanceof MineToolUseContext)) {
+            return false;
+        }
+
         int l = context.toolMetadata().getEnchantmentLevel(this);
         double chance = config.chance.getChance(l);
         return RandomUtils.nextDouble() <= chance;
@@ -82,7 +86,7 @@ public class CombustiveEnchantment implements
 
     @Override
     public void apply(EnchantmentUseContext context) {
-        BlockToolUseContext ctx = (BlockToolUseContext) context;
+        MineToolUseContext ctx = (MineToolUseContext) context;
         Block centreBlock = ctx.event().getBlock();
         World world = centreBlock.getWorld();
         Mine mine = ctx.mine();

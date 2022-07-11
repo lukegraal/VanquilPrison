@@ -10,11 +10,11 @@ import com.vanquil.prison.tools.util.C;
 
 public class FortuneEnchantment
         implements UpgradeableEnchantment, ConfigurableEnchantment<FortuneEnchantment.Config> {
-    public static final String NAME = "pickaxe_fortune";
+    public static final String NAME = "axe_fortune";
 
     public static class Config {
         final String displayName = "&cFortune";
-        final String description = "Multiplies the amount of blocks you get when you mine just one.";
+        final String description = "&7Multiplies the amount of blocks you get when you mine just one.";
         final int maxLevel = 100;
         final PriceConfig pricing = new PriceConfig();
     }

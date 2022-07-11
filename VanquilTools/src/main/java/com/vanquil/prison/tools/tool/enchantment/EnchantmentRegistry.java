@@ -7,21 +7,18 @@ import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.config.CustomEnchantmentConfig;
 import com.vanquil.prison.tools.tool.enchantment.container.EnchantmentContainer;
 import com.vanquil.prison.tools.tool.enchantment.impl.CommandEnchantment;
+import com.vanquil.prison.tools.tool.enchantment.impl.axe.EfficiencyEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.impl.axe.FortuneEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.impl.pickaxe.*;
+import com.vanquil.prison.tools.tool.enchantment.impl.axe.RadiusEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.listener.EnchantmentListener;
 
 import javax.annotation.Nullable;
 import java.util.Set;
 
 public class EnchantmentRegistry {
-    public static final SpeedEnchantment PickaxeSpeedEnchantment = new SpeedEnchantment();
-    public static final JumpBoostEnchantment PickaxeJumpBoostEnchantment = new JumpBoostEnchantment();
-    public static final NightVisionEnchantment PickaxeNightVisionEnchantment = new NightVisionEnchantment();
-    public static final FortuneEnchantment PickaxeFortuneEnchantment = new FortuneEnchantment();
-    public static final JackHammerEnchantment PickaxeJackHammerEnchantment = new JackHammerEnchantment();
-    public static final MultiDirectionalEnchantment PickaxeMultiDirectionalEnchantment = new MultiDirectionalEnchantment();
-    public static final CombustiveEnchantment PickaxeCombustiveEnchantment = new CombustiveEnchantment();
+    public static final ToolEnchantment EfficiencyEnchantment = new EfficiencyEnchantment();
+    public static final ToolEnchantment FortuneEnchantment = new FortuneEnchantment();
+    public static final ToolEnchantment RadiusEnchantment = new RadiusEnchantment();
 
     public static final Set<ToolEnchantment> Enchantments = Sets.newHashSet();
     public static final Set<PotionEffectEnchantment> PotionEffectEnchantments = Sets.newHashSet();
@@ -36,13 +33,9 @@ public class EnchantmentRegistry {
     );
 
     static {
-        register(PickaxeSpeedEnchantment);
-        register(PickaxeJumpBoostEnchantment);
-        register(PickaxeNightVisionEnchantment);
-        register(PickaxeFortuneEnchantment);
-        register(PickaxeJackHammerEnchantment);
-        register(PickaxeMultiDirectionalEnchantment);
-        register(PickaxeCombustiveEnchantment);
+        register(EfficiencyEnchantment);
+        register(FortuneEnchantment);
+        register(RadiusEnchantment);
         registerCustomEnchantments();
     }
 

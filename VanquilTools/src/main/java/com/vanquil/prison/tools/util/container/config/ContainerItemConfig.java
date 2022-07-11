@@ -11,6 +11,16 @@ public class ContainerItemConfig {
     protected String displayName;
     protected List<String> lore = Collections.emptyList();
 
+    public ContainerItemConfig(int amount, Material2 material, String displayName, List<String> lore) {
+        this.amount = amount;
+        this.material = material;
+        this.displayName = displayName;
+        this.lore = lore;
+    }
+
+    public ContainerItemConfig() {
+    }
+
     public int amount() {
         return amount;
     }

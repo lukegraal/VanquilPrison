@@ -44,11 +44,17 @@ public class ItemBuilder {
             String l = C.format(line);
             list.add(l);
         }
-        return lore(list);
+        meta.setLore(list);
+        return this;
     }
 
     public ItemBuilder lore(List<String> lines) {
-        meta.setLore(lines);
+        List<String> list = Lists.newArrayList();
+        for (String line : lines) {
+            String l = C.format(line);
+            list.add(l);
+        }
+        meta.setLore(list);
         return this;
     }
 
@@ -60,9 +66,19 @@ public class ItemBuilder {
 
     public ItemBuilder addWrappedLore(String line, int length) {
         List<String> wrap = wrap(line, length);
-        List<String> lore = meta.hasLore() ? meta.getLore() : Lists.newArrayList();
+        List<String> lore = meta.hasLore() ? Lists.newArrayList(meta.getLore()) : Lists.newArrayList();
         lore.addAll(wrap);
         return lore(lore);
+    }
+
+    public ItemBuilder addLore(List<String> lines) {
+        List<String> lore = Lists.newArrayList(meta.getLore());
+        lore.addAll(lines);
+        return lore(lore);
+    }
+
+    public ItemBuilder addLore(String... lines) {
+        return addLore(Lists.newArrayList(lines));
     }
 
     public static List<String> wrap(String line, int length) {
@@ -74,9 +90,6 @@ public class ItemBuilder {
             String lc = ChatColor.getLastColors(C.format(s));
             if (!lc.equals("")) lastColor = lc;
             list.add(l);
-        }
-        for (String s : list) {
-            System.out.println(s);
         }
         return list;
     }
@@ -90,11 +103,6 @@ public class ItemBuilder {
 
     public ItemBuilder flags(ItemFlag... flags) {
         meta.addItemFlags(flags);
-        return this;
-    }
-
-    public ItemBuilder addLore(String line) {
-        meta.getLore().add(C.format(line));
         return this;
     }
 

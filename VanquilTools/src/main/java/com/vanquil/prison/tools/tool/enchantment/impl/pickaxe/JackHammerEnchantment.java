@@ -4,8 +4,8 @@ import com.vanquil.prison.tools.tool.ToolType;
 import com.vanquil.prison.tools.tool.enchantment.ConditionalEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.ConfigurableEnchantment;
 import com.vanquil.prison.tools.tool.enchantment.UpgradeableEnchantment;
-import com.vanquil.prison.tools.tool.enchantment.context.BlockToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.context.EnchantmentUseContext;
+import com.vanquil.prison.tools.tool.enchantment.context.MineToolUseContext;
 import com.vanquil.prison.tools.tool.enchantment.util.ChanceConfig;
 import com.vanquil.prison.tools.tool.enchantment.util.PriceConfig;
 import com.vanquil.prison.tools.util.C;
@@ -23,7 +23,7 @@ public class JackHammerEnchantment implements
 
     public static class Config {
         final String displayName = "&cJack Hammer";
-        final String description = "Increase your chance to combust an entire layer of the mine at once.";
+        final String description = "&7Increase your chance to combust an entire layer of the mine at once.";
         final int maxLevel = 1_000;
         final ChanceConfig chance = new ChanceConfig();
         final PriceConfig pricing = new PriceConfig();
@@ -43,10 +43,12 @@ public class JackHammerEnchantment implements
 
     @Override
     public boolean testCondition(EnchantmentUseContext context) {
+        if (!(context instanceof MineToolUseContext)) {
+            return false;
+        }
+
         double chance = config.chance.getChance(context.toolMetadata().getEnchantmentLevel(this));
-        boolean b = RandomUtils.nextDouble() <= chance;
-        System.out.println("testing condition: " + b);
-        return b;
+        return RandomUtils.nextDouble() <= chance;
     }
 
     @Override
@@ -71,8 +73,7 @@ public class JackHammerEnchantment implements
 
     @Override
     public void apply(EnchantmentUseContext context) {
-        System.out.println("applying");
-        BlockToolUseContext ctx = (BlockToolUseContext) context;
+        MineToolUseContext ctx = (MineToolUseContext) context;
         Cuboid cuboid = ctx.mine().config().cuboid();
         int y = ctx.event().getBlock().getY();
         World world = ctx.event().getBlock().getWorld();

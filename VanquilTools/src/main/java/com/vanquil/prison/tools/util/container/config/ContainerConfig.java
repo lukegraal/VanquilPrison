@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class ContainerConfig {
+    protected String title;
     protected List<String> format;
     protected char closeCharacter = 'X';
     protected Map<String, ContainerItemConfig> itemMap;
@@ -28,5 +29,9 @@ public abstract class ContainerConfig {
 
     public char closeCharacter() {
         return closeCharacter;
+    }
+
+    public String title() {
+        return title;
     }
 }

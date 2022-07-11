@@ -21,9 +21,11 @@ public class ContainerListener
             Container holder = (Container) clickedInventory.getHolder();
             ContainerClickable clickable = holder.getClickableMap().get(event.getSlot());
             Player player = (Player) event.getWhoClicked();
-            clickable.action().click(player, event.getClick());
-            if (clickable.locked()) {
-                event.setCancelled(true);
+            if (clickable != null) {
+                clickable.action().click(player, event.getClick());
+                if (clickable.locked()) {
+                    event.setCancelled(true);
+                }
             }
         }
     }

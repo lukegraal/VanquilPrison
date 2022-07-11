@@ -1,25 +1,71 @@
 package com.vanquil.prison.tools.tool.enchantment.container.upgrade;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.vanquil.prison.tools.util.container.config.ContainerConfig;
 import com.vanquil.prison.tools.util.container.config.ContainerItemConfig;
 import com.vanquil.prison.tools.util.material.Material2;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class UpgradeContainerConfig {
-    final String addAmount = "&7Add {0} &7levels: &a+{1}";
-    final String price = "&7Price: &d&l{0} tokens";
+    public static class EnchantmentList
+            extends ContainerConfig {
+        final String currentLevelFormat = "&7Current level: &b{0}";
+        final String enchantmentUpgrade = "Click to upgrade enchantment";
+        final char enchantmentSlotsChar = '@';
+
+        public EnchantmentList() {
+            List<String> f = Lists.newArrayList();
+            f.add("#########");
+            f.add("#@@@@@@@#");
+            f.add("#@@@@@@@#");
+            f.add("#@@@@@@@#");
+            f.add("#########");
+            f.add("%%%%X%%%%");
+            format = f;
+
+            title = "Upgrade Tool";
+            itemMap = Maps.newHashMap();
+            itemMap.put("#", new ContainerItemConfig(1, Material2.CYAN_STAINED_GLASS_PANE, "&r", Collections.emptyList()));
+            itemMap.put("X", new ContainerItemConfig(1, Material2.BARRIER, "&cGo back or exit", Collections.emptyList()));
+        }
+
+        public String currentLevelFormat() {
+            return currentLevelFormat;
+        }
+
+        public String enchantmentUpgrade() {
+            return enchantmentUpgrade;
+        }
+
+        public char enchantmentSlotChar() {
+            return enchantmentSlotsChar;
+        }
+    }
 
     public static class UpgradeButtonConfig
             extends ContainerItemConfig {
         int modifier;
+
+        public UpgradeButtonConfig(int amount, Material2 material, String displayName, List<String> lore, int modifier) {
+            super(amount, material, displayName, lore);
+            this.modifier = modifier;
+        }
+
+        public UpgradeButtonConfig() {
+        }
     }
 
     public static class ModifyLevel
             extends ContainerConfig {
-        {
+        final char confirmCharacter = '@';
+        final Map<String, UpgradeButtonConfig> itemMap2;
+
+        public ModifyLevel() {
+            title = "Modify Transaction";
             closeCharacter = 'X';
             List<String> f = Lists.newArrayList();
             f.add("#########");
@@ -27,86 +73,25 @@ public class UpgradeContainerConfig {
             f.add("####X####");
             format = f;
 
-            itemMap.put(String.valueOf(closeCharacter), new UpgradeButtonConfig() {{
-                displayName = "&cCancel transaction";
-                modifier = 0;
-            }});
-            itemMap.put("#", new UpgradeButtonConfig() {{
-                displayName = "";
-                amount = 1;
-                material = Material2.CYAN_STAINED_GLASS;
-                modifier = 0;
-            }});
-            itemMap.put("A", new UpgradeButtonConfig() {{
-                displayName = "&c-100 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = -100;
-            }});
-            itemMap.put("B", new UpgradeButtonConfig() {{
-                displayName = "&c-10 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = -10;
-            }});
-            itemMap.put("C", new UpgradeButtonConfig() {{
-                displayName = "&c-1 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = -1;
-            }});
-            itemMap.put("@", new UpgradeButtonConfig() {{
-                displayName = "&d&lConfirm purchase";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                lore = Collections.singletonList("&7Click to process transaction.");
-                modifier = 0;
-            }});
-            itemMap.put("E", new UpgradeButtonConfig() {{
-                displayName = "&a-1 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = 1;
-            }});
-            itemMap.put("F", new UpgradeButtonConfig() {{
-                displayName = "&a+10 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = 10;
-            }});
-            itemMap.put("G", new UpgradeButtonConfig() {{
-                displayName = "&a+100 levels";
-                material = Material2.RED_STAINED_GLASS_PANE;
-                modifier = 100;
-            }});
+            itemMap2 = Maps.newHashMap();
+            itemMap2.put(String.valueOf(closeCharacter), new UpgradeButtonConfig(1, Material2.BARRIER, "&cCancel transaction", Collections.emptyList(), 0));
+            itemMap2.put("#", new UpgradeButtonConfig(1, Material2.CYAN_STAINED_GLASS_PANE, "&r", Collections.emptyList(), 0));
+            itemMap2.put("A", new UpgradeButtonConfig(1, Material2.RED_STAINED_GLASS_PANE, "&c-100 levels", Collections.emptyList(), -100));
+            itemMap2.put("B", new UpgradeButtonConfig(1, Material2.RED_STAINED_GLASS_PANE, "&c-10 levels", Collections.emptyList(), -10));
+            itemMap2.put("C", new UpgradeButtonConfig(1, Material2.RED_STAINED_GLASS_PANE, "&c-1 level", Collections.emptyList(), -1));
+            itemMap2.put("E", new UpgradeButtonConfig(1, Material2.LIME_STAINED_GLASS_PANE, "&a+1 levels", Collections.emptyList(), 1));
+            itemMap2.put("F", new UpgradeButtonConfig(1, Material2.LIME_STAINED_GLASS_PANE, "&a+10 levels", Collections.emptyList(), 10));
+            itemMap2.put("G", new UpgradeButtonConfig(1, Material2.LIME_STAINED_GLASS_PANE, "&a+100 levels", Collections.emptyList(), 100));
+            itemMap2.put("@", new UpgradeButtonConfig(1, Material2.NAME_TAG, "&d&lConfirm Transaction",
+                    Lists.newArrayList("&7Enchantment: {0}", "&7New level: &a{1}", "&7Price: {2}"), 0));
         }
-    }
 
-    public static class ConfirmTransaction
-            extends ContainerConfig {
-        {
-            closeCharacter = 'B';
-            List<String> f = Lists.newArrayList();
-            f.add("#########");
-            f.add("##A#@#B##");
-            f.add("#########");
-            format = f;
+        public char confirmCharacter() {
+            return confirmCharacter;
+        }
 
-            itemMap.put("#", new UpgradeButtonConfig() {{
-                displayName = "";
-                amount = 1;
-                material = Material2.CYAN_STAINED_GLASS;
-                modifier = 0;
-            }});
-            itemMap.put(String.valueOf(closeCharacter), new UpgradeButtonConfig() {{
-                displayName = "&c&lCancel transaction";
-                modifier = 0;
-            }});
-            itemMap.put("A", new UpgradeButtonConfig() {{
-                displayName = "&a&lConfirm transaction";
-                modifier = 0;
-            }});
-            itemMap.put("@", new UpgradeButtonConfig() {{
-                displayName = "&7Price: &d&l{0}";
-                lore = Lists.newArrayList(
-                        "If you purchase this item, the amount",
-                        "above will be withdrawn from your account.");
-                modifier = 0;
-            }});
+        public Map<String, UpgradeButtonConfig> itemMap2() {
+            return itemMap2;
         }
     }
 }

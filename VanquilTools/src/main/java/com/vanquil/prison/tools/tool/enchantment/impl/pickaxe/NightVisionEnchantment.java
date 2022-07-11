@@ -14,7 +14,7 @@ public final class NightVisionEnchantment
 
     public static class Config {
         final String displayName = "&cNight Vision";
-        final String description = "Gives you the Night Vision effect while you're holding the tool.";
+        final String description = "&7Gives you the Night Vision effect while you're holding the tool.";
         final long price = 1_000;
     }
 

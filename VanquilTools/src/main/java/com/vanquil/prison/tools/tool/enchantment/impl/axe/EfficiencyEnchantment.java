@@ -8,12 +8,12 @@ import org.bukkit.enchantments.Enchantment;
 
 public class EfficiencyEnchantment
         implements VanillaEnchantment, ConfigurableEnchantment<EfficiencyEnchantment.Config> {
-    private static final String NAME = "efficiency";
+    private static final String NAME = "axe_efficiency";
 
     public static class Config {
         final int maxLevel = 50;
         final String displayName = "&cEfficiency";
-        final String description = "Makes you mine things faster!";
+        final String description = "&7Makes you mine things faster!";
         final PriceConfig pricing = new PriceConfig();
     }
 

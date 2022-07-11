@@ -1,6 +1,9 @@
 package com.vanquil.prison.tools.util.material;
 
+import com.google.common.collect.Maps;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 public enum Material2 {
     AIR(0, (byte) 0),
@@ -557,9 +560,16 @@ public enum Material2 {
     private final int id;
     private final byte data;
 
+    private static final Map<Integer, Material2> MATERIAL_2_MAP
+            = Maps.newHashMap();
+
     Material2(int id, byte data) {
         this.id = id;
         this.data = data;
+    }
+
+    public static Material2 fromId(int id) {
+        return MATERIAL_2_MAP.get(id);
     }
 
     public int id() {
@@ -577,5 +587,11 @@ public enum Material2 {
 
     public ItemStack toItemStack() {
         return toItemStack(1);
+    }
+
+    static {
+        for (Material2 material : Material2.values()) {
+            MATERIAL_2_MAP.put(material.id, material);
+        }
     }
 }
